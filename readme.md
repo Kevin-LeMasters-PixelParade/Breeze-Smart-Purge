@@ -12,7 +12,7 @@ Intelligently purges CPT Archives, Taxonomies, and Custom Page Builder Hubs via 
 
 == Description ==
 
-By default, Breeze aggressively caches content. When you update a custom post type, it only clears the cache for that specific post. This leaves your important hub pages—like post grids, custom taxonomy archives, and page builder layouts—serving stale content to users.
+By default, Breeze aggressively caches content. When you update a custom post type, it only clears the cache for that specific post. This leaves your important hub pagesâ€”like post grids, custom taxonomy archives, and page builder layoutsâ€”serving stale content to users.
 
 **Breeze Smart Purge** acts as a traffic controller for your cache. The built-in Auto-Scanner detects which pages are querying specific Post Types, ensuring Breeze safely clears the cache for the parent pages and associated taxonomies whenever a post is updated.
 
@@ -35,6 +35,12 @@ No, this is an add-on utility. You must have the Breeze plugin installed and act
 
 = Which page builders does the Auto-Scanner detect? =
 Currently, the Auto-Scanner officially supports native Gutenberg blocks, Elementor, Bricks Builder, and Beaver Builder. If you use a different builder, you can map your URLs manually in the settings.
+
+== Downloads ==
+![GitHub Downloads](https://img.shields.io/github/downloads/Kevin-LeMasters-PixelParade/breeze-smart-purge/total?style=flat-square&color=2271b1)
+
+== Support ==
+Please note: This is a free, internal agency tool provided 'as-is'. We are sharing it to be helpful, but we do not provide active tech support, troubleshooting, or guaranteed updates.
 
 == Changelog ==
 
