@@ -405,7 +405,7 @@ function bsp_execute_auto_scanner($settings) {
             $page_path = '/';
         }
 
-        $elementor_data = get_post_meta($page->ID, '_elementor_data', true) ?: '';
+        $elementor_data = stripslashes(get_post_meta($page->ID, '_elementor_data', true) ?: '');
         $bricks_data    = get_post_meta($page->ID, '_bricks_page_content', true) ?: '';
         $oxygen_data    = get_post_meta($page->ID, 'ct_builder_json', true) ?: '';
         $beaver_data    = get_post_meta($page->ID, '_fl_builder_data', true) ?: '';
@@ -422,10 +422,18 @@ function bsp_execute_auto_scanner($settings) {
             if (strpos($content, '"postType":"' . $pt . '"') !== false || strpos($content, 'post_type="' . $pt . '"') !== false || strpos($content, "post_type='" . $pt . "'") !== false) {
                 $found_builders[] = "Gutenberg/Shortcode";
             }
+            
             // 2. Elementor
-            if (strpos($elementor_data, '"post_type":"' . $pt . '"') !== false || strpos($elementor_data, '"post_type":["' . $pt . '"]') !== false || strpos($elementor_data, '"source":"' . $pt . '"') !== false) {
+            // A) Check for explicit definitions in Addons (post_type, posts_post_type, source, query)
+            $el_regex = '/"(?:[a-zA-Z0-9_]*post_type|source|query)"\s*:\s*\[?\s*"' . preg_quote($pt, '/') . '"\s*\]?/i';
+            if (preg_match($el_regex, $elementor_data)) {
                 $found_builders[] = "Elementor";
+            } 
+            // B) Fallback: Catch native Elementor and Addon widgets that omit the parameter to query 'posts' implicitly
+            elseif ($pt === 'post' && preg_match('/"widgetType"\s*:\s*"[a-zA-Z0-9_-]*(?:post|loop|blog|magazine)[a-zA-Z0-9_-]*"/i', $elementor_data)) {
+                $found_builders[] = "Elementor (Implicit Posts)";
             }
+
             // 3. Bricks Builder
             if (strpos($bricks_data, '"postType":"' . $pt . '"') !== false || strpos($bricks_data, '"post_type":"' . $pt . '"') !== false) {
                 $found_builders[] = "Bricks";
