@@ -1,5 +1,5 @@
 === Breeze Smart Purge ===
-Contributors: pixelparade
+Contributors: PixelParade LLC
 Tags: cache, purge, breeze, cloudflare, performance
 Requires at least: 6.0
 Tested up to: 6.4
